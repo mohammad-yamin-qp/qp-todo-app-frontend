@@ -5,6 +5,7 @@ import '@npm-questionpro/wick-ui-lib/dist/style.css'
 import App from './App.tsx'
 import {IS_MOCK_ENV} from './constants/appConstants.ts'
 import {AppProviders} from './providers/AppProviders.tsx'
+import {BrowserRouter, Route, Routes} from 'react-router'
 
 async function enableMocking(): Promise<void> {
   if (!IS_MOCK_ENV) {
@@ -30,7 +31,11 @@ enableMocking()
     createRoot(document.getElementById('root')!).render(
       <StrictMode>
         <AppProviders>
-          <App />
+          <BrowserRouter>
+            <Routes>
+              <Route path="/" element={<App />} />
+            </Routes>
+          </BrowserRouter>
         </AppProviders>
       </StrictMode>,
     )

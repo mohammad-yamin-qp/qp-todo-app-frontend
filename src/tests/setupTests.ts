@@ -1,4 +1,3 @@
-import {afterAll, afterEach, beforeAll, beforeEach, vi} from 'vitest'
 import * as ResizeObserverModule from 'resize-observer-polyfill'
 import {cleanup} from '@testing-library/react'
 
