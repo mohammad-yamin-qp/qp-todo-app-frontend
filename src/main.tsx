@@ -1,11 +1,11 @@
-import {StrictMode} from 'react'
-import {createRoot} from 'react-dom/client'
 import '@npm-questionpro/wick-ui-icon/dist/wu-icon.css'
 import '@npm-questionpro/wick-ui-lib/dist/style.css'
-import App from './App.tsx'
+import {StrictMode} from 'react'
+import {createRoot} from 'react-dom/client'
+import {App} from './App.tsx'
 import {IS_MOCK_ENV} from './constants/appConstants.ts'
+import './index.css'
 import {AppProviders} from './providers/AppProviders.tsx'
-import {BrowserRouter, Route, Routes} from 'react-router'
 
 async function enableMocking(): Promise<void> {
   if (!IS_MOCK_ENV) {
@@ -31,11 +31,7 @@ enableMocking()
     createRoot(document.getElementById('root')!).render(
       <StrictMode>
         <AppProviders>
-          <BrowserRouter>
-            <Routes>
-              <Route path="/" element={<App />} />
-            </Routes>
-          </BrowserRouter>
+          <App />
         </AppProviders>
       </StrictMode>,
     )

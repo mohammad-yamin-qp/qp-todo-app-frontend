@@ -1,7 +1,7 @@
 {
   "name": "todo-app",
   "private": true,
-  "version": "0.0.0",
+  "version": "0.0.1",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -20,10 +20,12 @@
   "dependencies": {
     "@npm-questionpro/wick-ui-icon": "^8.0.2",
     "@npm-questionpro/wick-ui-lib": "^1.11.0",
+    "@tailwindcss/vite": "^4.1.16",
     "@tanstack/react-query": "^5.90.5",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
-    "react-router": "^7.9.4"
+    "react-router": "^7.9.4",
+    "tailwindcss": "^4.1.16"
   },
   "devDependencies": {
     "@eslint/js": "^9.36.0",
@@ -37,6 +39,7 @@
     "@types/react": "^19.2.2",
     "@types/react-dom": "^19.2.2",
     "@vitejs/plugin-react": "^5.0.4",
+    "@vitest/coverage-v8": "^4.0.3",
     "@vitest/ui": "^4.0.3",
     "eslint": "^9.38.0",
     "eslint-plugin-react-hooks": "^5.2.0",
