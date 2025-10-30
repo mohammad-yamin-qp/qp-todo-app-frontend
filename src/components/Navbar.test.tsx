@@ -1,5 +1,5 @@
 import {render, screen} from '@testing-library/react'
-import {APP_NAME} from '../../constants/appConstants'
+import {APP_NAME} from '../constants/appConstants'
 import {Navbar} from './Navbar'
 
 describe('Navbar', () => {
