@@ -6,13 +6,13 @@ import {
   type UseMutationResult,
   type UseQueryResult,
 } from '@tanstack/react-query'
-import axios from 'axios'
+import {api} from '../../../api/axios'
 import {QUERY_KEYS} from '../../../constants/queryKeysConstants'
 import {handleErrorResponse} from '../../../utils/handleOnErrorUtil'
 import type {ITodoApi} from '../types/ITodoApi'
 
 const getTodos = async (): Promise<ITodoApi[]> => {
-  const response = await axios.get<ITodoApi[]>('/api/todos')
+  const response = await api.get<ITodoApi[]>('/api/todos')
   return response.data
 }
 
@@ -26,7 +26,7 @@ const useGetTodos = (): UseQueryResult<ITodoApi[], Error> => {
 const createTodo: (body: ITodoApi) => Promise<ITodoApi> = async (
   body: ITodoApi,
 ) => {
-  const response = await axios.post<ITodoApi>('/api/todos', body)
+  const response = await api.post<ITodoApi>('/api/todos', body)
   return response.data
 }
 
@@ -51,7 +51,7 @@ const useCreateTodo = (
 }
 
 const updateTodo = async (body: ITodoApi): Promise<ITodoApi> => {
-  const response = await axios.put<ITodoApi>(`/api/todos/${body.id}`, body)
+  const response = await api.put<ITodoApi>(`/api/todos/${body.id}`, body)
   return response.data
 }
 
@@ -78,7 +78,7 @@ const useUpdateTodo = (): UseMutationResult<
 }
 
 const deleteTodo = async (id: number): Promise<void> => {
-  const response = await axios.delete(`/api/todos/${id}`)
+  const response = await api.delete(`/api/todos/${id}`)
   return response.data
 }
 

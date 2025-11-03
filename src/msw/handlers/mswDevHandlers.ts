@@ -1,4 +1,5 @@
 import {HttpResponse, http} from 'msw'
+import {API_BASE_URL} from '../../constants/appConstants'
 import type {ITodoApi} from '../../screens/TodoListScreen/types/ITodoApi'
 import {todoMockDb} from '../mockDbs/todoMockDb'
 
@@ -26,7 +27,7 @@ export const handlers = [
    * GET /api/todos
    * Mocks the `getTodos` function
    */
-  http.get('/api/todos', () => {
+  http.get(`${API_BASE_URL}api/todos`, () => {
     const mockTodos = todoMockDb.getTodos()
 
     return HttpResponse.json(mockTodos)
@@ -36,7 +37,7 @@ export const handlers = [
    * POST /api/todos
    * Mocks the `createTodo` function
    */
-  http.post('/api/todos', async ({request}) => {
+  http.post(`${API_BASE_URL}api/todos`, async ({request}) => {
     // Read the request body
     const newTodoData = (await request.json()) as Omit<ITodoApi, 'id'>
 
@@ -58,7 +59,7 @@ export const handlers = [
    * PUT /api/todos/:id
    * Mocks the `updateTodo` function
    */
-  http.put('/api/todos/:id', async ({request, params}) => {
+  http.put(`${API_BASE_URL}api/todos/:id`, async ({request, params}) => {
     const {id} = params
     const updatedData = (await request.json()) as Partial<ITodoApi>
 
@@ -74,7 +75,7 @@ export const handlers = [
    * DELETE /api/todos/:id
    * Mocks the `deleteTodo` function
    */
-  http.delete('/api/todos/:id', ({params}) => {
+  http.delete(`${API_BASE_URL}api/todos/:id`, ({params}) => {
     const {id} = params
     const isDeleted = todoMockDb.deleteTodo(Number(id))
 

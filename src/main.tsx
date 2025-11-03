@@ -13,7 +13,7 @@ async function enableMocking(): Promise<void> {
   }
 
   const {mswDevServer} = await import('./msw/mswDevServer.ts')
-  const serviceWorkerUrl = `${import.meta.env.BASE_URL}mockServiceWorker.js`
+  const serviceWorkerUrl = `${import.meta.env.VITE_CLIENT_URL}mockServiceWorker.js`
   console.log(serviceWorkerUrl)
 
   await mswDevServer.start({
