@@ -1,4 +1,5 @@
 import {WuInput, WuSelect} from '@npm-questionpro/wick-ui-lib'
+import {memo} from 'react'
 import {TODO_TYPE} from '../constants/todoTypeConstants'
 
 interface IProps {
@@ -8,9 +9,9 @@ interface IProps {
   ) => void
 }
 
-export const FilterBar: React.FC<IProps> = ({onSearch, onSelect}) => {
+export const FilterBar: React.FC<IProps> = memo(({onSearch, onSelect}) => {
   return (
-    <div className="flex justify-center items-center gap-4">
+    <>
       <WuInput
         type="text"
         Icon={<span className="wm-search"></span>}
@@ -26,6 +27,8 @@ export const FilterBar: React.FC<IProps> = ({onSearch, onSelect}) => {
         onSelect={onSelect}
         defaultValue={{label: 'All', value: 'all'}}
       />
-    </div>
+    </>
   )
-}
+})
+
+FilterBar.displayName = 'FilterBar'
