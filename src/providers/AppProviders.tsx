@@ -1,3 +1,4 @@
+import {WuToast} from '@npm-questionpro/wick-ui-lib'
 import {QueryClient, QueryClientProvider} from '@tanstack/react-query'
 import React from 'react'
 
@@ -16,6 +17,7 @@ export const AppProviders: React.FC<React.PropsWithChildren> = ({children}) => {
   return (
     <QueryClientProvider client={queryClientRef.current}>
       {children}
+      <WuToast />
     </QueryClientProvider>
   )
 }

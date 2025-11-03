@@ -3,13 +3,14 @@ import {useState} from 'react'
 import {AddTodoModal} from './components/AddTodoModal'
 import {FilterBar} from './components/FilterBar'
 import {HeadingTitle} from './components/HeadingTitle'
+import {TodoList} from './components/TodoList'
 
 export const TodoListScreen: React.FC = () => {
   const [isAddTodoModalOpen, setIsAddTodoModalOpen] = useState(false)
 
   return (
     <>
-      <section className="container mx-auto">
+      <section className="container mx-auto flex flex-col justify-center items-center">
         <HeadingTitle title="Todo List" />
 
         <div className="flex justify-center items-center gap-4">
@@ -21,6 +22,11 @@ export const TodoListScreen: React.FC = () => {
           >
             Add new
           </WuButton>
+        </div>
+
+        <div className="mt-8 w-full">
+          {/* Todo List Component */}
+          <TodoList />
         </div>
       </section>
       {isAddTodoModalOpen && (

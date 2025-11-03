@@ -9,34 +9,32 @@ import {
 import {api} from '../../../api/axios'
 import {QUERY_KEYS} from '../../../constants/queryKeysConstants'
 import {handleErrorResponse} from '../../../utils/handleOnErrorUtil'
-import type {ITodoApi} from '../types/ITodoApi'
+import type {ITodo} from '../types/ITodoApi'
 
-const getTodos = async (): Promise<ITodoApi[]> => {
-  const response = await api.get<ITodoApi[]>('/api/todos')
+const getTodos = async (): Promise<ITodo[]> => {
+  const response = await api.get<ITodo[]>('/api/todos')
   return response.data
 }
 
-const useGetTodos = (): UseQueryResult<ITodoApi[], Error> => {
-  return useQuery<ITodoApi[], Error>({
+const useGetTodos = (): UseQueryResult<ITodo[], Error> => {
+  return useQuery<ITodo[], Error>({
     queryKey: [QUERY_KEYS.TODOS],
     queryFn: getTodos,
   })
 }
 
-const createTodo: (body: ITodoApi) => Promise<ITodoApi> = async (
-  body: ITodoApi,
-) => {
-  const response = await api.post<ITodoApi>('/api/todos', body)
+const createTodo: (body: ITodo) => Promise<ITodo> = async (body: ITodo) => {
+  const response = await api.post<ITodo>('/api/todos', body)
   return response.data
 }
 
 const useCreateTodo = (
   onSuccess?: () => void,
-): UseMutationResult<ITodoApi, Error, ITodoApi, unknown> => {
+): UseMutationResult<ITodo, Error, ITodo, unknown> => {
   const queryClient = useQueryClient()
   const {showToast} = useWuShowToast()
 
-  return useMutation<ITodoApi, Error, ITodoApi>({
+  return useMutation<ITodo, Error, ITodo>({
     mutationFn: createTodo,
     onSuccess: () => {
       void queryClient.invalidateQueries({queryKey: [QUERY_KEYS.TODOS]})
@@ -50,21 +48,18 @@ const useCreateTodo = (
   })
 }
 
-const updateTodo = async (body: ITodoApi): Promise<ITodoApi> => {
-  const response = await api.put<ITodoApi>(`/api/todos/${body.id}`, body)
+const updateTodo = async (body: ITodo): Promise<ITodo> => {
+  const response = await api.put<ITodo>(`/api/todos/${body.id}`, body)
   return response.data
 }
 
-const useUpdateTodo = (): UseMutationResult<
-  ITodoApi,
-  Error,
-  ITodoApi,
-  unknown
-> => {
+const useUpdateTodo = (
+  onSuccess?: () => void,
+): UseMutationResult<ITodo, Error, ITodo, unknown> => {
   const queryClient = useQueryClient()
   const {showToast} = useWuShowToast()
 
-  return useMutation<ITodoApi, Error, ITodoApi>({
+  return useMutation<ITodo, Error, ITodo>({
     mutationFn: updateTodo,
     onSuccess: () => {
       queryClient.invalidateQueries({queryKey: [QUERY_KEYS.TODOS]})
@@ -72,6 +67,7 @@ const useUpdateTodo = (): UseMutationResult<
         variant: 'success',
         message: 'Todo updated successfully',
       })
+      onSuccess?.()
     },
     onError: handleErrorResponse,
   })

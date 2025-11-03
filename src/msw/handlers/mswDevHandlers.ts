@@ -1,6 +1,6 @@
 import {HttpResponse, http} from 'msw'
 import {API_BASE_URL} from '../../constants/appConstants'
-import type {ITodoApi} from '../../screens/TodoListScreen/types/ITodoApi'
+import type {ITodo} from '../../screens/TodoListScreen/types/ITodoApi'
 import {todoMockDb} from '../mockDbs/todoMockDb'
 
 // const sendResponse = <T>(res: T): HttpResponse<{data: T}> => {
@@ -39,13 +39,13 @@ export const handlers = [
    */
   http.post(`${API_BASE_URL}api/todos`, async ({request}) => {
     // Read the request body
-    const newTodoData = (await request.json()) as Omit<ITodoApi, 'id'>
+    const newTodoData = (await request.json()) as Omit<ITodo, 'id'>
 
     if (!newTodoData.task) {
       return HttpResponse.json({message: 'Title is required'}, {status: 400})
     }
 
-    const newTodo: ITodoApi = {
+    const newTodo: ITodo = {
       id: getNextId(),
       task: newTodoData.task,
       completed: newTodoData.completed || false,
@@ -61,7 +61,7 @@ export const handlers = [
    */
   http.put(`${API_BASE_URL}api/todos/:id`, async ({request, params}) => {
     const {id} = params
-    const updatedData = (await request.json()) as Partial<ITodoApi>
+    const updatedData = (await request.json()) as Partial<ITodo>
 
     const updatedTodo = todoMockDb.updateTodo(Number(id), updatedData)
 

@@ -1,16 +1,16 @@
-import type {ITodoApi} from '../../screens/TodoListScreen/types/ITodoApi'
+import type {ITodo} from '../../screens/TodoListScreen/types/ITodoApi'
 
-let mockTodos: ITodoApi[] = [
+let mockTodos: ITodo[] = [
   {id: 1, task: 'Learn MSW', completed: false},
   {id: 2, task: 'Write tests', completed: true},
   {id: 3, task: 'Integrate with React Query', completed: false},
 ]
 
 export const todoMockDb = {
-  getTodos: (): ITodoApi[] => {
+  getTodos: (): ITodo[] => {
     return mockTodos
   },
-  getTodo: (id: number): ITodoApi | undefined => {
+  getTodo: (id: number): ITodo | undefined => {
     return mockTodos.find(t => t.id === id)
   },
   resetTodos: (): void => {
@@ -20,14 +20,11 @@ export const todoMockDb = {
       {id: 3, task: 'Integrate with React Query', completed: false},
     ]
   },
-  addTodo: (todo: ITodoApi): void => {
+  addTodo: (todo: ITodo): void => {
     mockTodos = [...mockTodos, todo]
   },
-  updateTodo: (
-    id: number,
-    updatedTodo: Partial<ITodoApi>,
-  ): ITodoApi | undefined => {
-    let newTodo: ITodoApi | undefined
+  updateTodo: (id: number, updatedTodo: Partial<ITodo>): ITodo | undefined => {
+    let newTodo: ITodo | undefined
     mockTodos = mockTodos.map(t => {
       if (t.id === id) {
         newTodo = {...t, ...updatedTodo}
