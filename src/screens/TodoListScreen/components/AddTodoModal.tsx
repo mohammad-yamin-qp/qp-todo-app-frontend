@@ -21,12 +21,21 @@ export const AddTodoModal: React.FC<IProps> = memo(({open, onClose}) => {
   const {
     register,
     handleSubmit,
+    reset,
     formState: {errors},
   } = useForm<IAddTodoForm>()
-  const {mutate: createTodo, isPending} = todoApi.useCreateTodo(onClose)
+  const {mutate: createTodo, isPending} = todoApi.useCreateTodo(onSuccess)
 
   const onSubmit: SubmitHandler<IAddTodoForm> = data => {
-    createTodo(data)
+    createTodo({
+      task: data.task,
+      completed: false,
+    })
+  }
+
+  function onSuccess(): void {
+    reset()
+    onClose()
   }
 
   return (
