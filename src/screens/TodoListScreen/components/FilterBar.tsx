@@ -1,22 +1,37 @@
 import {WuInput, WuSelect} from '@npm-questionpro/wick-ui-lib'
-import {memo} from 'react'
+import {memo, useState} from 'react'
+import {useTodoStore} from '../../../store/todoStore'
 import {TODO_TYPE} from '../constants/todoTypeConstants'
 
-interface IProps {
-  onSearch: (query: string) => void
-  onSelect: (
-    value: {label: string; value: string} | {label: string; value: string}[],
-  ) => void
-}
+export const FilterBar = memo(() => {
+  const [selectedType, setSelectedType] = useState<{
+    label: string
+    value: string
+  }>()
 
-export const FilterBar: React.FC<IProps> = memo(({onSearch, onSelect}) => {
+  const {setQuery, setType} = useTodoStore(state => state)
+
+  const onSelect = (
+    option: {label: string; value: string} | {label: string; value: string}[],
+  ): void => {
+    const selected = Array.isArray(option) ? option[0] : option
+    if (selected) {
+      setType(selected.value)
+      setSelectedType(selected)
+    } else {
+      // when selection is cleared, reset filters as needed
+      setType('all')
+      setSelectedType(undefined)
+    }
+  }
+
   return (
     <>
       <WuInput
         type="text"
         Icon={<span className="wm-search"></span>}
         iconPosition="right"
-        onChange={e => onSearch(e.target.value)}
+        onChange={e => setQuery(e.target.value)}
         placeholder="Search"
       />
       <WuSelect
@@ -26,6 +41,7 @@ export const FilterBar: React.FC<IProps> = memo(({onSearch, onSelect}) => {
         placeholder="Filter"
         onSelect={onSelect}
         defaultValue={{label: 'All', value: 'all'}}
+        value={selectedType as {label: string; value: string}}
       />
     </>
   )

@@ -1,9 +1,15 @@
 import {WuLoader} from '@npm-questionpro/wick-ui-lib'
+import {memo} from 'react'
+import {useTodoStore} from '../../../store/todoStore'
 import {todoApi} from '../api/todoApi'
 import {TodoItem} from './TodoItem'
 
-export const TodoList: React.FC = () => {
-  const {data: todos, isPending} = todoApi.useGetTodos()
+export const TodoList = memo(() => {
+  const {query, type} = useTodoStore(state => state)
+  const {data: todos, isPending} = todoApi.useGetTodos({
+    query,
+    type,
+  })
 
   if (isPending) {
     return (
@@ -20,4 +26,6 @@ export const TodoList: React.FC = () => {
       ))}
     </div>
   )
-}
+})
+
+TodoList.displayName = 'TodoList'

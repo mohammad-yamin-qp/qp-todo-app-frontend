@@ -11,15 +11,17 @@ import {QUERY_KEYS} from '../../../constants/queryKeysConstants'
 import {handleErrorResponse} from '../../../utils/handleOnErrorUtil'
 import type {ITodo} from '../types/ITodoApi'
 
-const getTodos = async (): Promise<ITodo[]> => {
-  const response = await api.get<ITodo[]>('/api/todos')
+const getTodos = async (params?: Record<string, string>): Promise<ITodo[]> => {
+  const response = await api.get<ITodo[]>('/api/todos', {params})
   return response.data
 }
 
-const useGetTodos = (): UseQueryResult<ITodo[], Error> => {
+const useGetTodos = (
+  params?: Record<string, string>,
+): UseQueryResult<ITodo[], Error> => {
   return useQuery<ITodo[], Error>({
-    queryKey: [QUERY_KEYS.TODOS],
-    queryFn: getTodos,
+    queryKey: [QUERY_KEYS.TODOS, params],
+    queryFn: () => getTodos(params),
   })
 }
 

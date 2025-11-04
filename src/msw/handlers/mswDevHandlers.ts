@@ -27,8 +27,29 @@ export const handlers = [
    * GET /api/todos
    * Mocks the `getTodos` function
    */
-  http.get(`${API_BASE_URL}api/todos`, () => {
-    const mockTodos = todoMockDb.getTodos()
+  http.get(`${API_BASE_URL}api/todos`, ({request}) => {
+    const url = new URL(request.url)
+    const query = url.searchParams.get('query')
+    const type = url.searchParams.get('type')
+
+    let mockTodos = todoMockDb.getTodos()
+
+    if (query) {
+      mockTodos = mockTodos.filter(todo =>
+        todo.task.toLowerCase().includes(query.toLowerCase()),
+      )
+    }
+
+    if (type) {
+      mockTodos = mockTodos.filter(todo => {
+        if (type === 'completed') {
+          return todo.completed === true
+        } else if (type === 'pending') {
+          return todo.completed === false
+        }
+        return true
+      })
+    }
 
     return HttpResponse.json(mockTodos)
   }),

@@ -54,7 +54,7 @@ export const TodoItem: React.FC<IProps> = ({todo}) => {
               onKeyUp={onEnterKeyUp}
             />
           ) : (
-            <p>{todo.task}</p>
+            <p className={todo.completed ? 'line-through' : ''}>{todo.task}</p>
           )}
         </div>
 

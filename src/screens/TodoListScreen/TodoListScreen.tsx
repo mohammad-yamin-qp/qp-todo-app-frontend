@@ -1,9 +1,13 @@
 import {WuButton} from '@npm-questionpro/wick-ui-lib'
-import {useState} from 'react'
-import {AddTodoModal} from './components/AddTodoModal'
+import {lazy, useState} from 'react'
 import {FilterBar} from './components/FilterBar'
 import {HeadingTitle} from './components/HeadingTitle'
 import {TodoList} from './components/TodoList'
+const AddTodoModal = lazy(() =>
+  import('./components/AddTodoModal').then(module => ({
+    default: module.AddTodoModal,
+  })),
+)
 
 export const TodoListScreen: React.FC = () => {
   const [isAddTodoModalOpen, setIsAddTodoModalOpen] = useState(false)
@@ -14,7 +18,7 @@ export const TodoListScreen: React.FC = () => {
         <HeadingTitle title="Todo List" />
 
         <div className="flex justify-center items-center gap-4">
-          <FilterBar onSearch={console.log} onSelect={console.log} />
+          <FilterBar />
           <WuButton
             Icon={<span className="wm-add" />}
             iconPosition="left"
