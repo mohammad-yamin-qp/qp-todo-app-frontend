@@ -23,6 +23,8 @@ export default defineConfig({
         'src/msw',
         '_tests_',
         'vite.config.ts',
+        'src/api',
+        'src/constants',
       ],
       thresholds: {
         lines: 80,
