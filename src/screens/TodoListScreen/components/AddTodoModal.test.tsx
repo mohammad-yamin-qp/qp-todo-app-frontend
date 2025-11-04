@@ -96,8 +96,9 @@ describe('AddTodoModal', () => {
     await user.type(taskInput, 'New Todo Task')
     await user.click(saveButton)
 
-    const newSaveButton = getSaveButton()
-    expect(newSaveButton).toBeDisabled()
+    waitFor(() => {
+      expect(screen.getByRole('button', {name: /save/i})).toBeDisabled()
+    })
   })
 
   it('should clear task input field and call onClose', async () => {
