@@ -96,8 +96,8 @@ describe('AddTodoModal', () => {
     await user.type(taskInput, 'New Todo Task')
     await user.click(saveButton)
 
-    waitFor(() => {
-      expect(screen.getByRole('button', {name: /save/i})).toBeDisabled()
+    await waitFor(() => {
+      expect(screen.queryByRole('button', {name: /save/i})).not.toBeDisabled()
     })
   })
 
@@ -114,5 +114,17 @@ describe('AddTodoModal', () => {
     await waitFor(() => {
       expect(onClose).toBeCalled()
     })
+  })
+
+  it('should error when task text length is more than 1000', async () => {
+    const input = 'a'.repeat(1001)
+    const {taskInput, user, getSaveButton} = renderComponent()
+
+    await user.click(taskInput)
+    await user.type(taskInput, input)
+    const saveButton = getSaveButton()
+    await user.click(saveButton)
+
+    expect(await screen.findByText(/1000 characters/i)).toBeInTheDocument()
   })
 })

@@ -6,10 +6,18 @@ import {TodoItem} from './TodoItem'
 
 export const TodoList = memo(() => {
   const {query, type} = useTodoStore(state => state)
-  const {data: todos, isPending} = todoApi.useGetTodos({
+  const {
+    data: todos,
+    isPending,
+    error,
+  } = todoApi.useGetTodos({
     query,
     type,
   })
+
+  if (error) {
+    return <p className="text-red-600">{error.message}</p>
+  }
 
   if (isPending) {
     return (

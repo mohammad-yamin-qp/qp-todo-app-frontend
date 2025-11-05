@@ -1,4 +1,6 @@
+import {API_BASE_URL} from '@/constants/appConstants'
 import {todoMockDb} from '@/msw/mockDbs/todoMockDb'
+import {http, HttpResponse, mswTestServer} from '@/msw/mswTestServer'
 import {AppProviders} from '@/providers/AppProviders'
 import {render, screen, waitFor} from '@testing-library/react'
 import userEvent, {type UserEvent} from '@testing-library/user-event'
@@ -190,5 +192,17 @@ describe('TodoListScrenn', () => {
     await user.type(searchInput, allTodos[0].task.slice(0, 3))
 
     expect(await screen.findByText(allTodos[0].task)).toBeInTheDocument()
+  })
+
+  it('should show error message if it is failed to fetch todos from api', async () => {
+    mswTestServer.use(
+      http.get(`${API_BASE_URL}api/todos`, () => {
+        return HttpResponse.error()
+      }),
+    )
+
+    renderComponent()
+
+    expect(await screen.findByText(/error/i)).toBeInTheDocument()
   })
 })
