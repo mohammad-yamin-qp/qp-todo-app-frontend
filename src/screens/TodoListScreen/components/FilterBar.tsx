@@ -15,14 +15,8 @@ export const FilterBar = memo(() => {
     option: {label: string; value: string} | {label: string; value: string}[],
   ): void => {
     const selected = Array.isArray(option) ? option[0] : option
-    if (selected) {
-      setType(selected.value)
-      setSelectedType(selected)
-    } else {
-      // when selection is cleared, reset filters as needed
-      setType('all')
-      setSelectedType(TODO_TYPE[0])
-    }
+    setType(selected.value)
+    setSelectedType(selected)
   }
 
   return (

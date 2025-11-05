@@ -47,7 +47,6 @@ describe('FilterBar', () => {
 
     await user.click(selectFilter)
 
-    screen.debug()
     TODO_TYPE.forEach(todo => {
       expect(
         screen.getByRole('menuitem', {name: todo.label}),
