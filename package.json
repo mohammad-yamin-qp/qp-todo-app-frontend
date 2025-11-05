@@ -18,6 +18,7 @@
     "test:ui": "vitest --ui"
   },
   "dependencies": {
+    "@hookform/resolvers": "^5.2.2",
     "@npm-questionpro/wick-ui-icon": "^8.0.2",
     "@npm-questionpro/wick-ui-lib": "^1.11.0",
     "@tailwindcss/vite": "^4.1.16",
@@ -28,6 +29,7 @@
     "react-hook-form": "^7.65.0",
     "react-router": "^7.9.4",
     "tailwindcss": "^4.1.16",
+    "zod": "^4.1.12",
     "zustand": "^5.0.8"
   },
   "devDependencies": {

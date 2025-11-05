@@ -1,3 +1,4 @@
+import {zodResolver} from '@hookform/resolvers/zod'
 import {
   WuButton,
   WuModal,
@@ -24,7 +25,9 @@ export const AddTodoModal: React.NamedExoticComponent<IProps> = memo(
       handleSubmit,
       reset,
       formState: {errors},
-    } = useForm<IAddTodoForm>()
+    } = useForm<IAddTodoForm>({
+      resolver: zodResolver(AddTodoFormValidationSchema),
+    })
     const {mutate: createTodo, isPending} = todoApi.useCreateTodo(onSuccess)
 
     const onSubmit: SubmitHandler<IAddTodoForm> = data => {
@@ -50,9 +53,11 @@ export const AddTodoModal: React.NamedExoticComponent<IProps> = memo(
               labelPosition="top"
               rows={5}
               required
-              {...register('task', AddTodoFormValidationSchema.task)}
+              {...register('task')}
             />
-            {errors.task && <span>{errors.task.message}</span>}
+            {errors.task && (
+              <span className="text-red-600">Error: {errors.task.message}</span>
+            )}
           </WuModalContent>
           <WuModalFooter>
             <WuButton onClick={onClose} variant="secondary">
