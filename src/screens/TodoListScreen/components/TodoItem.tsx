@@ -64,9 +64,11 @@ export const TodoItem: React.FC<IProps> = ({todo}) => {
               variant="iconOnly"
               Icon={<span className="wm-done" />}
               onClick={onUpdate}
+              aria-label="done"
             />
           ) : (
             <WuButton
+              aria-label="edit"
               variant="iconOnly"
               Icon={<span className="wm-edit" />}
               onClick={() => setIsEditing(true)}
@@ -74,6 +76,7 @@ export const TodoItem: React.FC<IProps> = ({todo}) => {
           )}
 
           <WuButton
+            aria-label="delete"
             variant="iconOnly"
             Icon={<span className="wm-delete" />}
             onClick={() => setIsDeleteModalOpen(true)}

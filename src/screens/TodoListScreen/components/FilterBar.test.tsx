@@ -1,3 +1,4 @@
+import {useTodoStore} from '@/store/todoStore'
 import {render, screen} from '@testing-library/react'
 import {userEvent} from '@testing-library/user-event'
 import {TODO_TYPE} from '../constants/todoTypeConstants'
@@ -6,18 +7,13 @@ import {FilterBar} from './FilterBar'
 describe('FilterBar', () => {
   // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
   const renderComponent = () => {
-    const onSearch = vi.fn()
-    const onSelect = vi.fn()
-
-    render(<FilterBar onSearch={onSearch} onSelect={onSelect} />)
+    render(<FilterBar />)
 
     const searchInput = screen.getByPlaceholderText(/search/i)
     const selectFilter = screen.getByRole('button', {name: /select todo type/i})
     const user = userEvent.setup()
 
     return {
-      onSearch,
-      onSelect,
       searchInput,
       selectFilter,
       user,
@@ -31,14 +27,13 @@ describe('FilterBar', () => {
     expect(selectFilter).toBeInTheDocument()
   })
 
-  it('should call onSearch when some text is typed in inputField', async () => {
-    const {onSearch, user, searchInput} = renderComponent()
+  it('should set query when some text is typed in inputField', async () => {
+    const {user, searchInput} = renderComponent()
     const input = 'vitest'
-
     await user.click(searchInput)
     await user.type(searchInput, input)
 
-    expect(onSearch).toBeCalledWith('vi')
+    expect(useTodoStore.getState().query).toBe(input)
   })
 
   it('should check selectFilter if default value All is selected', () => {
@@ -60,14 +55,14 @@ describe('FilterBar', () => {
     })
   })
 
-  it('should call onSelect with selected filter value when another value selected', async () => {
-    const {selectFilter, onSelect, user} = renderComponent()
+  it('should set type with selected filter value when another value selected', async () => {
+    const {selectFilter, user} = renderComponent()
 
     await user.click(selectFilter)
 
     const options = screen.getAllByRole('menuitem')
     await user.click(options[1])
 
-    expect(onSelect).toBeCalledWith(TODO_TYPE[1])
+    expect(useTodoStore.getState().type).toBe(TODO_TYPE[1].value)
   })
 })

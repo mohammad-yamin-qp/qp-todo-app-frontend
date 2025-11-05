@@ -39,7 +39,9 @@ const useCreateTodo = (
   return useMutation<ITodo, Error, ITodo>({
     mutationFn: createTodo,
     onSuccess: () => {
-      void queryClient.invalidateQueries({queryKey: [QUERY_KEYS.TODOS]})
+      queryClient.invalidateQueries({
+        queryKey: [QUERY_KEYS.TODOS],
+      })
       onSuccess?.()
       showToast({
         variant: 'success',
@@ -64,7 +66,9 @@ const useUpdateTodo = (
   return useMutation<ITodo, Error, ITodo>({
     mutationFn: updateTodo,
     onSuccess: () => {
-      queryClient.invalidateQueries({queryKey: [QUERY_KEYS.TODOS]})
+      queryClient.invalidateQueries({
+        queryKey: [QUERY_KEYS.TODOS],
+      })
       showToast({
         variant: 'success',
         message: 'Todo updated successfully',
@@ -87,7 +91,9 @@ const useDeleteTodo = (): UseMutationResult<void, Error, number, unknown> => {
   return useMutation<void, Error, number>({
     mutationFn: deleteTodo,
     onSuccess: () => {
-      queryClient.invalidateQueries({queryKey: [QUERY_KEYS.TODOS]})
+      queryClient.invalidateQueries({
+        queryKey: [QUERY_KEYS.TODOS],
+      })
       showToast({
         variant: 'success',
         message: 'Todo deleted successfully',

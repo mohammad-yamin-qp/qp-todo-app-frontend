@@ -7,7 +7,7 @@ export const FilterBar = memo(() => {
   const [selectedType, setSelectedType] = useState<{
     label: string
     value: string
-  }>()
+  }>(TODO_TYPE[0])
 
   const {setQuery, setType} = useTodoStore(state => state)
 
@@ -21,7 +21,7 @@ export const FilterBar = memo(() => {
     } else {
       // when selection is cleared, reset filters as needed
       setType('all')
-      setSelectedType(undefined)
+      setSelectedType(TODO_TYPE[0])
     }
   }
 
@@ -40,7 +40,6 @@ export const FilterBar = memo(() => {
         accessorKey={{label: 'label', value: 'value'}}
         placeholder="Filter"
         onSelect={onSelect}
-        defaultValue={{label: 'All', value: 'all'}}
         value={selectedType as {label: string; value: string}}
       />
     </>
